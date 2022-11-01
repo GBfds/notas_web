@@ -1,0 +1,26 @@
+.container{
+    max-width: 1120px;
+    height: calc(100vh - 6rem);
+    margin: 1rem 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    h1{
+        color: var(--white);
+    }
+
+}
+
+@media (max-width: 650px){
+    .container{
+        flex-direction: column;
+
+        img{
+            margin:1rem 0.4rem;
+            width: 80%;
+            object-fit: contain;
+        }
+    }
+}

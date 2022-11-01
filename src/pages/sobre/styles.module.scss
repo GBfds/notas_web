@@ -1,0 +1,36 @@
+.sobreContainer{
+    width: 80%;
+    height: calc(100vh - 12rem);
+    margin: 2.5rem auto;
+
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2.5rem;
+    color: var(--white);
+
+    h1{
+        font-size: 3rem;
+        span{
+            color: var(--blue-900);
+        }
+    }
+    ul{
+        padding-left: 1rem;
+    }
+    li{
+        font-size: 1.2rem;
+    }
+
+    h2{
+        font-size: 2rem;
+        color: var(--blue-900);
+        margin-top: 2rem;
+    }
+    .links{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 60%;
+        margin: 3rem auto;
+    }
+}
