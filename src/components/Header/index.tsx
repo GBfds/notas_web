@@ -12,7 +12,7 @@ export function Header(){
                 <Link href="/">
                     Home
                 </Link>
-                <Link href="/construcao">
+                <Link href="/notas">
                     Suas notas
                 </Link>
                 <Link href="/sobre">
