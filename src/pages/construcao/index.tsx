@@ -2,7 +2,7 @@ import Image from "next/image";
 import constructImg from "../../../public/images/icone-obra-emandamento.png";
 import styles from "./styles.module.scss";
 
-export default function Notas(){
+export default function Construção(){
     return(
         <main className={styles.container}>
             <h1>A pagina está em desenvolvimento...</h1>

@@ -34,3 +34,14 @@
         margin: 3rem auto;
     }
 }
+
+@media (max-width: 530px){
+    .sobreContainer{
+        .links{
+            flex-direction: column;
+        }
+        a{
+            margin-top: 1rem;
+        }
+    }
+}

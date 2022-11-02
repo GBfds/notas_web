@@ -18,14 +18,14 @@ export default function Sobre(){
             </ul>
             <h2>Contatos</h2>
             <div className={styles.links}>
-                <Link href="https://wa.me/qr/QN5YAAEJJIFMA1" target="_blank">
-                    <IoLogoWhatsapp size={25} color="green"/>
-                    <span>Whatsapp</span>
+                <Link href="https://github.com/GBfds/notas_web" target="_blank">
+                    <IoLogoGithub size={25} color="#ffb800"/>
+                    <span>Repositorio desse projeto</span>
                 </Link>
 
                 <Link href="https://github.com/GBfds" target="_blank">
                     <IoLogoGithub size={25} color="#ffb800"/>
-                    <span>Github</span>
+                    <span>Meu Github</span>
                 </Link>
 
                 <Link href="" target="_blank">
