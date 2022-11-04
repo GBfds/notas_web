@@ -6,8 +6,26 @@ import Head from "next/head";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
-export default function notas(){
+export default function Notas(){
     const [novaTarefa, setNovaTarefa] = useState("");
+    const [edit, setEdit] = useState(false)
+
+    function deleteNota(){
+        alert("teste dlt")
+
+    }
+
+    function createNota(e){
+        e.preventDefault();
+        alert("teste crt")
+    }
+
+    function editNota(){
+        setEdit(true)
+    }
+    function cancelEdit(){
+        setEdit(false)
+    }
 
     return(
         <>
@@ -17,8 +35,10 @@ export default function notas(){
         <StaticPage/>
         <main className={styles.container}>
             <div className={styles.contentForm}>
-                <label>Digite sua nova tarefa:</label>
-                <form>
+                {edit ? (<label  className={styles.edit}>Você está editando uma anotação:</label>)
+                : (<label>Digite uma nova anotação:</label>)}
+                {edit && (<button className={styles.cancelEdit} onClick={cancelEdit}>cancelar</button>)}                
+                <form onSubmit={createNota}>
                     <input 
                     type="text"
                     placeholder="digite sua tarefa"
@@ -27,7 +47,7 @@ export default function notas(){
 
                     />
 
-                    <button>
+                    <button type="submit">
                         <AiOutlinePlus size={30}/>
                     </button>
                 </form>
@@ -42,12 +62,12 @@ export default function notas(){
                     </div>
 
                     <div className={styles.actions}>
-                        <button>
+                        <button onClick={editNota}>
                             <FiEdit size={20} color="#ffb800"/>
                             <span>Editar</span>
                         </button>
 
-                        <button>
+                        <button onClick={deleteNota}>
                             <FiTrash2 size={20} color="red"/>
                             <span>Deletar</span>
                         </button>
