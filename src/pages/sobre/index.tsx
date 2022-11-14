@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
 import Link from "next/link";
 
-import { IoLogoGithub, IoIosMail } from "react-icons/io";
-import { IoLogoWhatsapp } from "react-icons/io5";
+import { IoLogoGithub } from "react-icons/io";
 
 
 //https://wa.me/qr/QN5YAAEJJIFMA1
@@ -26,11 +25,6 @@ export default function Sobre(){
                 <Link href="https://github.com/GBfds" target="_blank">
                     <IoLogoGithub size={25} color="#ffb800"/>
                     <span>Meu Github</span>
-                </Link>
-
-                <Link href="" target="_blank">
-                    <IoIosMail size={25} color="#fff"/>
-                    <span>Gmail</span>
                 </Link>
             </div>
         </div>

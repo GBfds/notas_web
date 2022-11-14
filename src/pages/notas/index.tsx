@@ -1,12 +1,17 @@
 import styles from "./styles.module.scss";
+
 import { StaticPage } from "../../components/StaticPage";
+import { useSession } from "next-auth/react";
 
 import {useState} from "react"
+
 import Head from "next/head";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 export default function Notas(){
+    const {data: session} = useSession();
+
     const [novaTarefa, setNovaTarefa] = useState("");
     const [edit, setEdit] = useState(false)
 
@@ -25,6 +30,14 @@ export default function Notas(){
     }
     function cancelEdit(){
         setEdit(false)
+    }
+
+    if(!session){
+        return(
+            <div className={styles.containerAalertLogin}>
+                <h1>Você precisa estar logado para ver suas anotaçôes</h1>
+            </div>
+        )
     }
 
     return(

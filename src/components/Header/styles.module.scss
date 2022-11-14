@@ -9,9 +9,15 @@
     align-items: center;
 
     div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
         height: 3rem;
+        width: 80%;
         max-width: 1120px;
-        margin: 0 auto;
+        margin: 0 3rem;
     }
 
     nav{

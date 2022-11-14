@@ -134,3 +134,18 @@
         }
     }
 }
+
+.containerAalertLogin{
+    width: 80%;
+    margin: 0 auto;
+    height: calc(100vh - 6rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1{
+        color: var(--blue-900);
+        font-size: 2rem;
+        
+    }
+}
