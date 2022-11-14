@@ -1,28 +1,85 @@
 import styles from "./styles.module.scss";
 
+import { getSession, useSession } from "next-auth/react";
+import firebase from "../../services/fireBaseConection";
+import { GetServerSideProps } from "next";
+import {format} from "date-fns";
+
+import {useState, FormEvent} from "react"
+
 import { StaticPage } from "../../components/StaticPage";
-import { useSession } from "next-auth/react";
-
-import {useState} from "react"
-
 import Head from "next/head";
+
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
-export default function Notas(){
+type Data ={
+    id: string;
+    tarefa: string;
+    user: string;
+    userEmail: string;
+    created: Date | string;
+    createdFormated: string;
+}
+
+interface DataProps{
+    data: string
+}
+
+export default function Notas({data}: DataProps){
     const {data: session} = useSession();
 
     const [novaTarefa, setNovaTarefa] = useState("");
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(false);
+    const [tarefas, setTarefas] = useState<Data[]>(JSON.parse(data));
 
-    function deleteNota(){
-        alert("teste dlt")
+    async function deleteNota(id){
+       firebase.firestore().collection("notasWeb")
+       .doc(id)
+       .delete()
+       .then(()=>{
+        let tarefaDelete = tarefas.filter((item)=> {
+            return(item.id !== id)
+        })
 
+        setTarefas(tarefaDelete)
+       })
+       .catch(()=>{
+        alert("erro ao deletar")
+       })
     }
 
-    function createNota(e){
+    async function createNota(e: FormEvent){
         e.preventDefault();
-        alert("teste crt")
+        if (novaTarefa ===""){
+            alert("Preencha o campo de tarefa")
+            return;
+        }
+        await firebase.firestore().collection("notasWeb")
+        .add({
+            tarefa: novaTarefa,
+            user: session.user.name,
+            userEmail: session.user.email,
+            created: new Date()
+        })
+        .then((doc)=>{
+            alert("todo certo")
+
+            let tasks = {
+                id: doc.id,
+                tarefa: novaTarefa,
+                user: session.user.name,
+                userEmail: session.user.email,
+                created: new Date(),
+                createdFormated: format(new Date(), "dd MMMM yyyy")
+            }
+
+            setTarefas([...tarefas, tasks]);
+            setNovaTarefa("");
+        })
+        .catch(()=>{
+            alert("erro")
+        })
     }
 
     function editNota(){
@@ -32,13 +89,6 @@ export default function Notas(){
         setEdit(false)
     }
 
-    if(!session){
-        return(
-            <div className={styles.containerAalertLogin}>
-                <h1>Você precisa estar logado para ver suas anotaçôes</h1>
-            </div>
-        )
-    }
 
     return(
         <>
@@ -69,9 +119,11 @@ export default function Notas(){
             </div>
 
             <div className={styles.contentTarefas}>
-                <article>
+                {tarefas.map(trf => (
+                <article key={trf.id}>
                     <div className={styles.tarefa}>
-                        <h2>Implementar conexão com usuarios</h2>
+                        <h2>{trf.tarefa}</h2>
+                        <time>{trf.createdFormated}</time>
                     </div>
 
                     <div className={styles.actions}>
@@ -80,32 +132,50 @@ export default function Notas(){
                             <span>Editar</span>
                         </button>
 
-                        <button onClick={deleteNota}>
+                        <button onClick={() => deleteNota(trf.id)}>
                             <FiTrash2 size={20} color="red"/>
                             <span>Deletar</span>
                         </button>
                     </div>
                 </article>
-
-                <article>
-                    <div className={styles.tarefa}>
-                        <h2>Implimentar banco de dados</h2>
-                    </div>
-
-                    <div className={styles.actions}>
-                        <button>
-                            <FiEdit size={20} color="#ffb800"/>
-                            <span>Editar</span>
-                        </button>
-
-                        <button>
-                            <FiTrash2 size={20} color="red"/>
-                            <span>Deletar</span>
-                        </button>
-                    </div>
-                </article>
+                ))}
             </div>
         </main>
         </>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({req}) =>{
+    const session = await getSession({req});
+
+    if (!session){
+        return{
+            redirect:{
+                destination:"/logar",
+                permanent: false
+            }
+        }
+    }
+
+    const tasks = await firebase.firestore().collection("notasWeb")
+    .where("userEmail", "==", session.user.email)
+    .orderBy("created", "asc")
+    .get()
+
+    const data = JSON.stringify(tasks.docs.map(u => {
+        return{
+            id: u.id,
+            createdFormated: format(u.data().created.toDate(), "dd MMMM yyyy"),
+            ...u.data(),
+        }
+    }))
+
+    //console.log(JSON.parse(data));
+    
+
+    return{
+        props:{
+            data
+        }
+    }
 }

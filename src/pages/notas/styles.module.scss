@@ -77,6 +77,16 @@
         border-radius: 8px;
         padding: 1.5rem;
 
+        .tarefa{
+            display: flex;
+            flex-direction: column;
+
+            time{
+                color: #ffb800;
+                margin: 8px 0;
+            }
+        }
+
         article{
             background-color: var(--gray-700);
             border: 1px solid var(--blue-900);
@@ -135,17 +145,3 @@
     }
 }
 
-.containerAalertLogin{
-    width: 80%;
-    margin: 0 auto;
-    height: calc(100vh - 6rem);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    h1{
-        color: var(--blue-900);
-        font-size: 2rem;
-        
-    }
-}

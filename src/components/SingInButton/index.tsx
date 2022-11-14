@@ -1,5 +1,6 @@
 import React from "react";
-import {useSession, signIn, signOut} from "next-auth/react";
+import { signIn, signOut, useSession} from "next-auth/react";
+
 
 import styles from "./styles.module.scss";
 import {FaGoogle} from "react-icons/fa";
@@ -7,7 +8,6 @@ import { FiXCircle } from "react-icons/fi";
 
 
 export function SingInButton(){
-
     const {data: session} = useSession();
     
 
@@ -18,7 +18,7 @@ export function SingInButton(){
         onClick={() => signOut()}
         >
             <FaGoogle size={13} color="red"/>
-            Bem vindo!
+            <p>Bem vindo {}</p>
             <FiXCircle size={20}/>
         </button>
     ) : (
