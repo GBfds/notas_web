@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     background-color: var(--gray-700);
-    height: 6rem;
+    min-height: 6rem;
     color: var(--white);
 
     display: flex;
@@ -30,5 +30,19 @@
         justify-content: space-around;
 
         background: linear-gradient( to top, var(--gray-700) 90%, var(--blue-900));
+    }
+}
+
+@media (max-width:470px){
+    .container{
+        div{
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px 0;
+
+            h1{
+                margin-bottom: 8px;
+            }
+        }
     }
 }
