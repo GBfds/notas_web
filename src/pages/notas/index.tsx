@@ -7,10 +7,9 @@ import {format} from "date-fns";
 
 import {useState, FormEvent} from "react"
 
-import { StaticPage } from "../../components/StaticPage";
 import Head from "next/head";
 
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus, AiFillEdit } from "react-icons/ai";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 type Data ={
@@ -30,7 +29,7 @@ export default function Notas({data}: DataProps){
     const {data: session} = useSession();
 
     const [novaTarefa, setNovaTarefa] = useState("");
-    const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState<Data | null>(null);
     const [tarefas, setTarefas] = useState<Data[]>(JSON.parse(data));
 
     async function deleteNota(id){
@@ -55,6 +54,26 @@ export default function Notas({data}: DataProps){
             alert("Preencha o campo de tarefa")
             return;
         }
+
+        if(edit){
+            firebase.firestore().collection("notasWeb")
+            .doc(edit.id)
+            .update({
+                tarefa: novaTarefa
+            })
+            .then(()=>{
+                let contentTarefas = tarefas
+                let index = tarefas.findIndex(item=> item.id === edit.id)
+                contentTarefas[index].tarefa = novaTarefa
+
+                setTarefas(contentTarefas);
+                setNovaTarefa("");
+                setEdit(null);
+            })
+
+            return;
+        }
+
         await firebase.firestore().collection("notasWeb")
         .add({
             tarefa: novaTarefa,
@@ -63,7 +82,6 @@ export default function Notas({data}: DataProps){
             created: new Date()
         })
         .then((doc)=>{
-            alert("todo certo")
 
             let tasks = {
                 id: doc.id,
@@ -82,11 +100,13 @@ export default function Notas({data}: DataProps){
         })
     }
 
-    function editNota(){
-        setEdit(true)
+    function editNota(trf : Data){
+        setNovaTarefa(trf.tarefa)
+        setEdit(trf)
     }
     function cancelEdit(){
-        setEdit(false)
+        setNovaTarefa("")
+        setEdit(null)
     }
 
 
@@ -95,7 +115,6 @@ export default function Notas({data}: DataProps){
         <Head>
             <title>Suas notas - Notas web</title>
         </Head>
-        <StaticPage/>
         <main className={styles.container}>
             <div className={styles.contentForm}>
                 {edit ? (<label  className={styles.edit}>Você está editando uma anotação:</label>)
@@ -111,7 +130,12 @@ export default function Notas({data}: DataProps){
                     />
 
                     <button type="submit">
-                        <AiOutlinePlus size={30}/>
+                        {edit ? (
+                            <AiFillEdit size={30}/>
+                        )
+                        : (
+                            <AiOutlinePlus size={30}/>
+                        )}
                     </button>
                 </form>
 
@@ -127,7 +151,7 @@ export default function Notas({data}: DataProps){
                     </div>
 
                     <div className={styles.actions}>
-                        <button onClick={editNota}>
+                        <button onClick={() => editNota(trf)}>
                             <FiEdit size={20} color="#ffb800"/>
                             <span>Editar</span>
                         </button>
