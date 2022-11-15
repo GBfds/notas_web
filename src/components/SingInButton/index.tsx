@@ -1,5 +1,5 @@
 import React from "react";
-import { getSession, signIn, signOut, useSession} from "next-auth/react";
+import { signIn, signOut, useSession} from "next-auth/react";
 
 
 import styles from "./styles.module.scss";
@@ -7,10 +7,8 @@ import {FaGoogle} from "react-icons/fa";
 import { FiXCircle } from "react-icons/fi";
 
 
+export function SingInButton(){
 
-export function SingInButton(user){
-
-    console.log(user.userName)
     const {data: session} = useSession();
     
 
