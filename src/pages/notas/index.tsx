@@ -183,7 +183,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}) =>{
 
     const tasks = await firebase.firestore().collection("notasWeb")
     .where("userEmail", "==", session.user.email)
-    .orderBy("created", "asc")
+    .orderBy("created", "desc")
     .get()
 
     const data = JSON.stringify(tasks.docs.map(u => {
