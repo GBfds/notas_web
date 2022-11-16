@@ -12,7 +12,17 @@ export function SingInButton(){
     const {data: session} = useSession();
     
 
-    return session ? (
+    return !session ? (
+        <button
+        type="button"
+        className={styles.singOutButton}
+        onClick={()=> signIn()}
+        >
+            <FaGoogle size={13}/>
+            Entrar com google
+        </button>
+
+    ) : (
         <button
         type="button"
         className={styles.singInButton}
@@ -21,15 +31,6 @@ export function SingInButton(){
             <FaGoogle size={13} color="red"/>
             <p>Você está conectado</p>
             <FiXCircle size={20}/>
-        </button>
-    ) : (
-        <button
-        type="button"
-        className={styles.singOutButton}
-        onClick={()=> signIn()}
-        >
-            <FaGoogle size={13}/>
-            Entrar com google
         </button>
     )
 }
