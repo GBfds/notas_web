@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     background-color: var(--gray-700);
-    height: 6rem;
+    min-height: 6rem;
     color: var(--white);
 
     display: flex;
@@ -14,7 +14,7 @@
         justify-content: space-between;
         align-items: center;
 
-        height: 3rem;
+        min-height: 3rem;
         width: 80%;
         max-width: 1120px;
         margin: 0 3rem;
@@ -30,5 +30,18 @@
         justify-content: space-around;
 
         background: linear-gradient( to top, var(--gray-700) 90%, var(--blue-900));
+    }
+}
+
+@media (max-width:470px){
+    .container{
+        div{
+            flex-direction: column;
+            padding: 8px 0;
+
+            h1{
+                margin-bottom: 5px;
+            }
+        }
     }
 }
