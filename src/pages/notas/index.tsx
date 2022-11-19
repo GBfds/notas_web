@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 
-import { getSession, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/client";
 import firebase from "../../services/fireBaseConection";
 import { GetServerSideProps } from "next";
 import {format} from "date-fns";
@@ -26,7 +26,7 @@ interface DataProps{
 }
 
 export default function Notas({data}: DataProps){
-    const {data: session} = useSession();
+    const [session] = useSession();
 
     const [novaTarefa, setNovaTarefa] = useState("");
     const [edit, setEdit] = useState<Data | null>(null);
@@ -183,7 +183,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}) =>{
 
     const tasks = await firebase.firestore().collection("notasWeb")
     .where("userEmail", "==", session.user.email)
-    .orderBy("created", "asc")
+    .orderBy("created", "desc")
     .get()
 
     const data = JSON.stringify(tasks.docs.map(u => {
@@ -194,7 +194,6 @@ export const getServerSideProps: GetServerSideProps = async ({req}) =>{
         }
     }))
 
-    //console.log(JSON.parse(data));
     
 
     return{
