@@ -31,7 +31,7 @@ export default function Sobre(){
                     <span>Meu Github</span>
                 </Link>
 
-                <Link href="www.linkedin.com/in/gabriel-fernandes-245743220" target="_blank">
+                <Link href="https://www.linkedin.com/in/gabriel-fernandes-245743220/" target="_blank">
                     <IoLogoLinkedin size={25} color="#0e76a8"/>
                     <span>Meu linkedin</span>
                 </Link>
