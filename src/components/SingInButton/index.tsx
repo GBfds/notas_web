@@ -29,7 +29,7 @@ export function SingInButton(){
         onClick={() => signOut()}
         >
             <FaGoogle size={13} color="red"/>
-            <p>Bem vindo {session.user?.name}</p>
+            <p>Bem vindo</p>
             <FiXCircle size={20}/>
         </button>
     )
