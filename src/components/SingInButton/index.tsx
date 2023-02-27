@@ -9,15 +9,14 @@ import { FiXCircle } from "react-icons/fi";
 
 
 export function SingInButton(){
-    //const [session] = useSession();
-    const session = false
+    const [session] = useSession();
     
 
     return !session ? (
         <button
         type="button"
         className={styles.singOutButton}
-        //onClick={()=> signIn("google")}
+        onClick={()=> signIn("google")}
         >
             <FaGoogle size={13}/>
             Entrar com google
