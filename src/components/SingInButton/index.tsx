@@ -10,6 +10,7 @@ import { FiXCircle } from "react-icons/fi";
 
 export function SingInButton(){
     const [session] = useSession();
+    const userName = session?.user.name.split(" ", 1)
     
 
     return !session ? (
@@ -29,7 +30,7 @@ export function SingInButton(){
         onClick={() => signOut()}
         >
             <FaGoogle size={13} color="red"/>
-            <p>Bem vindo {session.user.name}</p>
+            <p>Bem vindo {userName}</p>
             <FiXCircle size={20}/>
         </button>
     )
