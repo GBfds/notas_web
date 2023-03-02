@@ -11,7 +11,6 @@ function MyApp({ Component, pageProps} : AppProps) {
   return(
     <NextAuthProvider session={pageProps.session}>
     <Header/>
-    <MessageAlert/>
     <Component {...pageProps} />
     </NextAuthProvider>
   ) 
