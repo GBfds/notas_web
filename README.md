@@ -1,4 +1,4 @@
-Para ver o projeto hospedado [Click aqui](https://notas-web-online.vercel.app/)
+Para ver o projeto hospedado [Click aqui]()
 
 ## Notas_web
 
